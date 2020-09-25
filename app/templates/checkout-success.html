@@ -1,0 +1,13 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+{{ super() }} | Checkout-Success
+{% endblock %}
+
+{% block content %}
+<h3>success</h3>
+<p>thanks for your money!</p>
+<div>
+{{stripe_session}}
+</div>
+{% endblock %}

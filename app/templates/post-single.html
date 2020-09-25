@@ -1,0 +1,29 @@
+{% extends 'layout.html'%}
+{% set active_page='single-post'-%}
+
+
+{% block title %}
+{{ super() }} | Post-View
+{% endblock %}
+
+{% block content%}
+<h3>Single-Post-Page</h3>
+<hr>
+<div class="row">
+    <div class="containter-col-md-12">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p>
+                <h5>
+                    {{ post.body }}
+                </h5>
+                </p>
+                <cite>
+                    &mdash; {{ "{} {}" .format(current_user.first_name, current_user.last_name)}} @
+                    {{ moment(post.created_on).fromNow() }}
+                </cite>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

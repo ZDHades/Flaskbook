@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% set active_page='profile' -%}
+
+{% block title %}
+{{ super() }} | {{ "{} {}" .format(current_user.first_name, current_user.last_name) }}
+{% endblock %} 
+
+{% block content %}
+<h3>Profile Page</h3>
+<hr>
+<h5>Hello {{ "{} {}" .format(current_user.first_name, current_user.last_name) }}, would you like to change your
+    information? </h5>
+
+<div class="row">
+    <div class='col-md-6'>
+        <form action="{{ url_for('authentication.profile') }}" method='POST' novalidate>
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.first_name(class='form-control', placeholder='First Name') }}
+            </div>
+            <div class="form-group">
+                {{ form.last_name(class='form-control', placeholder='Last Name') }}
+            </div>
+            <div class="form-group">
+                {{ form.email(class='form-control', placeholder='Email') }}
+                {%for error in form.email.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{error}}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.password(class='form-control', placeholder='Password') }}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password(class='form-control', placeholder='Confirm Password') }}
+            </div>
+            {{ form.submit(class='btn btn-outline-primary btn-block') }}
+        </form>
+
+
+        {#<!-- <form action="{{url_for('authentication.profile') }}" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="first_name" value='{{ user.first_name }}'
+                    placeholder="First Name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="last_name" value='{{user.last_name }}'
+                    placeholder="Last Name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="email" value='{{ user.email }}' placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder=" New Password">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="confirm_password" placeholder="Confirm New Password">
+            </div>
+            <input type="submit" class="btn btn-outline-primary btn-block">
+        </form> -->#}
+    </div>
+</div>
+
+
+<hr>
+<div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-12">
+        <form class="form-inline" action="{{ url_for('blog.create_post') }}" method="POST">
+            <div class="input-group flex-fill">
+                <input type="search" name="post-body" placeholder="Whats poppin" class="form-control">
+                <div class="input-group-append">
+                    <input type="submit" value="Post" class="btn btn-primary" data-disable-with="Search">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<h3>Your posts</h3>
+<div class="row">
+    <div class="containter-col-md-12">
+        <ul class="list-group">
+            {% if current_user.is_authenticated %}
+            {% for p in posts %}
+            <li class="list-group-item">
+                <p>
+                <h5>
+                    <a href="{{url_for('blog.get_post', id=p.id)}}">{{ p.body }}</a>
+                </h5>
+                </p>
+                <cite>
+                    &mdash; {{ "{} {}" .format(current_user.first_name, current_user.last_name)}} @
+                    {{ moment(p.created_on).fromNow() }}
+                </cite>
+            </li>
+            {% endfor %}
+            {% else %}
+            <h3>No posts to show!</h3>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

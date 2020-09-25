@@ -1,0 +1,45 @@
+{% extends 'layout.html'%}
+{% set active_page='index'-%}
+
+{% block title %}
+    {{ super() }} | Homepage
+{% endblock %}
+{% block content %}
+    <h3>Your highlights stream</h3>
+    <hr>
+    <div class="row" style="margin-bottom: 25px;">
+        <div class="col-md-12">
+            <form class="form-inline" action="{{ url_for('blog.create_post') }}" method="POST">
+                <div class="input-group flex-fill">
+                    <input type="search" name="post-body" placeholder="Whats poppin" class="form-control">
+                    <div class="input-group-append">
+                        <input type="submit" value="Post" class="btn btn-primary" data-disable-with="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="containter-col-md-12">
+            <ul class="list-group">
+                {% if current_user.is_authenticated %}
+                {% for p in posts %}
+                <li class="list-group-item">
+                    <p>
+                    <h5>
+                        <a href="{{url_for('blog.get_post', id=p.id)}}">{{ p.body }}</a>
+                    </h5>
+                    </p>
+                    <cite>
+                        &mdash; {{ "{} {}" .format(p.user.first_name, p.user.last_name)}} @ {{ moment(p.created_on).fromNow() }}
+                    </cite>
+                </li>
+                {% endfor %}
+                {% else %}
+                <h3>No posts to show!</h3>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

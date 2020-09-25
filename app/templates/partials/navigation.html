@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ url_for('main.index') }}">FlaskBook</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+            {% for href, id, caption in navigation_bar %}
+
+            <li class="nav-item {% if id==active_page %}active{% endif %} ">
+                <a class="nav-link" href="{{ href|e }}">{{ caption|e }}<span class="sr-only">(current)</span></a>
+            </li>
+
+            {% endfor %}
+
+            <li class="">
+                <a class="nav-link" href="/shop/cart"> <span >Cart</span> <i class="fa fa-shopping-cart"> </i> <span class="badge badge-light"> {% if cart %} {{ cart['items']|length }} | ${{ '{:,.2f}'.format(cart['cart_total']) }} {% else %} 0 | $0.00 {% endif %}</span>                   
+                </a>
+            </li>
+
+         
+        </ul>
+        <ul class="navbar-nav m1-auto">
+            {% if not current_user.is_authenticated %}
+
+            <li class="nav-item">
+                <a href="{{url_for('authentication.login')}}" class="nav-link">Login</a></li>
+            <li class="nav-item">
+                <a href="{{url_for('authentication.register')}}" class="nav-link">Register</a></li>
+
+            {% else %}
+            <li class="nav-item">
+                <a href="{{url_for('authentication.users')}}" class="nav-link">Users</a></li>
+            <li class="nav-item">
+                <a href="{{url_for('authentication.profile')}}" class="nav-link">Profile</a></li>
+            <li class="nav-item">
+                <a href="{{url_for('authentication.logout')}}" class="nav-link">Logout</a></li>
+            {% endif %}
+
+
+
+        </ul>
+    </div>
+</nav>

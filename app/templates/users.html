@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% set active_page='users' -%}
+
+{% block title %}
+{{ super() }} | Users
+{% endblock %}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h5>FlaskBook Users</h5>
+        <ul class="list-group">
+            {% for u in users %}
+            <li class="list-group-item">
+                {{ "{} {}".format(u.first_name, u.last_name) }}
+                <span class='float-right'>
+                    {% if current_user.is_following(u) %}
+                    <a href="{{ url_for('authentication.unfollow', id=u.id) }}" class='btn btn-warning btn-sm'>Unfollow</a>
+                    {% else %}
+                    <a href="{{ url_for('authentication.follow', id=u.id) }}" class="btn btn-info btn-sm">Follow</a>
+                    {% endif %}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

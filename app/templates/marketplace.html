@@ -1,0 +1,33 @@
+{% extends 'layout.html'%}
+{% set active_page='shop'-%}
+
+
+{% block title %}
+{{ super() }} | MarketPlace
+{% endblock %}
+
+{% block content%}
+
+
+
+
+<div class="row">
+    {% for p in products %}
+    <div class="col-md-4">
+        <figure class="card card-product">
+            <div class="img-wrap"><img src="{{ p.image }}" class="img-fluid"></div>
+            <figcaption class="info-wrap">
+                <h4 class="title">{{ p.name }}</h4>
+                <p class="desc">{{ p.description }}</p>
+            </figcaption>
+            <div class="bottom-wrap">
+                <a href="{{ url_for('shop.add_to_cart', id=p.id) }}" class="btn btn-sm btn-outline-primary float-right">Add to Cart!</a>
+                <div class="price-wrap h5">
+                    <span class="price-new">${{ '{:,.2f}'.format(p.price) }}</span> <del class="price-old">${{ '{:,.2f}'.format(p.price*1.2) }}</del>
+                </div>
+            </div>
+        </figure>
+    </div>     
+    {% endfor %}
+</div>
+{% endblock %}
