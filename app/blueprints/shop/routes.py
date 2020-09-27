@@ -97,8 +97,8 @@ def create_checkout_session():
         payment_method_types=['card'],
         line_items=stripe_line_items,
         mode='payment',
-        success_url='http://localhost:5000/shop/checkout/success',
-        cancel_url='http://localhost:5000/shop/checkout/cancel'
+        success_url='https://flaskbook-api.herokuapp.com/shop/checkout/success',
+        cancel_url='https://flaskbook-api.herokuapp.com/shop/checkout/cancel'
     )
 
     session['stripe_session_information'] = stripe_session
