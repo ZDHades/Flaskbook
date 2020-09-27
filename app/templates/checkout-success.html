@@ -8,6 +8,16 @@
 <h3>success</h3>
 <p>thanks for your money!</p>
 <div>
-{{stripe_session}}
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ebaumsworld.com%2Fpictures%2Fwheels-on-a-shopping-cart-meme-be-like-trending-right-now%2F86061294%2F&psig=AOvVaw0BxFvtsWJlgGpliqAZoq_N&ust=1601308153008000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCq-u_XiewCFQAAAAAdAAAAABAO" alt="Card image cap">
+    <div class="card-body">
+        <p class="card-text">Thanks for shopping at Flaskbook! Please leave a nice review or we will delay your shipping!.</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Total: {{ stripe_session.amount_total }} </li>
+            <li class="list-group-item">Shipping Date: Sometime this year</li>
+            <li class="list-group-item">Did you get scammed? Probably</li>
+        </ul>
+    </div>
+</div>
 </div>
 {% endblock %}

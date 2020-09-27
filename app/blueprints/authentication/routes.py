@@ -34,7 +34,7 @@ def login():
         user = User.query.filter_by(email=r.get('email')).first()
         if user is None or not user.check_password(r.get('password')):
             flash("You have either used an incorrect email or password!", 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('authentication.login'))
         next_page = request.args.get('next')
         login_user(user, remember=r.get('remember_me'))
         if not next_page or url_parse(next_page).netloc != '':
